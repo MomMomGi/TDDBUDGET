@@ -1,22 +1,61 @@
-import BudgetService.BudgetService;
+import entity.Budget;
+import service.BudgetService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.Mockito;
+import service.IBudgetRepo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class BudgetServiceTest {
+
+
     @Test
     public void singleMonth(){
-        BudgetService budgetService = new BudgetService();
-        assertEquals(1000.00,
+        List<Budget> bList = new ArrayList<Budget>();
+        bList.add(new Budget("202111",3000));
+        IBudgetRepo repo = mock(IBudgetRepo.class);
+        when(repo.getAll()).thenReturn(bList);
+
+        BudgetService budgetService = new BudgetService(repo);
+        assertEquals(3000.00,
                 budgetService.query(
-                        LocalDate.parse("2021-11-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                        LocalDate.parse("2021-11-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+                        LocalDate.of(2021,11,1),
+                        LocalDate.of(2021,11,30)));
 
     }
 
+    @Test
+    public void partialMonth(){
+        List<Budget> bList = new ArrayList<Budget>();
+        bList.add(new Budget("202111",3000));
+        bList.add(new Budget("202112",3100));
+        IBudgetRepo repo = mock(IBudgetRepo.class);
+        when(repo.getAll()).thenReturn(bList);
+        BudgetService budgetService = new BudgetService(repo);
+        assertEquals(300.00,
+                budgetService.query(
+                        LocalDate.of(2021,11,2),
+                        LocalDate.of(2021,11,4)));
+    }
+
+    @Test
+    public void crossMonth(){
+        List<Budget> bList = new ArrayList<Budget>();
+        bList.add(new Budget("202111",3000));
+        bList.add(new Budget("202112",6200));
+        IBudgetRepo repo = mock(IBudgetRepo.class);
+        when(repo.getAll()).thenReturn(bList);
+        BudgetService budgetService = new BudgetService(repo);
+        assertEquals(500.00,
+                budgetService.query(
+                        LocalDate.of(2021,11,30),
+                        LocalDate.of(2021,12,2)));
+    }
 }

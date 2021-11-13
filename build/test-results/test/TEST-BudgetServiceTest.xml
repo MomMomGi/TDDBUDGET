@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="BudgetServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-13T08:24:50" hostname="pc27.wireless4.tku.edu.tw" time="0.011">
+<testsuite name="BudgetServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-11-13T09:28:05" hostname="pc27.wireless4.tku.edu.tw" time="0.234">
   <properties/>
-  <testcase name="singleMonth()" classname="BudgetServiceTest" time="0.011"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="singleMonth()" classname="BudgetServiceTest" time="0.232"/>
+  <testcase name="crossMonth()" classname="BudgetServiceTest" time="0.001"/>
+  <testcase name="partialMonth()" classname="BudgetServiceTest" time="0.001"/>
+  <system-out><![CDATA[0
+1
+0
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
