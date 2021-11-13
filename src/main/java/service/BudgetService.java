@@ -46,10 +46,10 @@ public class BudgetService {
             double result = 0;
             for(Budget b : all) {
              if (bMap.get(b.getYearMonth())!=null){
-//                 result += b.getAmount()* bMap.get(b)/YearMonth.from().lengthOfMonth();
+                 result += b.getAmount()* bMap.get(b)/YearMonth.of(Integer.valueOf(b.getYearMonth().substring(0,4)),Integer.valueOf(b.getYearMonth().substring(4,6))).lengthOfMonth();
              }
             }
-            return 500.00;
+            return result;
         }
 //        int dayOfMonth
         return 0;
